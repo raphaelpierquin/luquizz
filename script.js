@@ -10,7 +10,7 @@ class QuizApp {
     async loadQuizData() {
         try {
             const urlParams = new URLSearchParams(window.location.search);
-            const quizName = urlParams.get('quiz') || 'quiz-data';
+            const quizName = urlParams.get('q') || 'default-quiz';
             const response = await fetch(`${quizName}.json`);
             quizData = await response.json();
             this.init();
