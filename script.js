@@ -1,82 +1,23 @@
-const quizData = {
-    title: "What Animal Are You?",
-    description: "Discover your spirit animal with this fun personality quiz!",
-    questions: [
-        {
-            text: "What do you do on weekends?",
-            answers: [
-                { text: "Stay in bed all day", points: { sloth: 2, cat: 1 } },
-                { text: "Go for a run or hike", points: { dog: 2, lion: 1 } },
-                { text: "Read a good book", points: { owl: 2, cat: 1 } },
-                { text: "Hang out with friends", points: { dog: 2, lion: 1 } }
-            ]
-        },
-        {
-            text: "Your ideal vacation would be:",
-            answers: [
-                { text: "Beach resort with spa", points: { sloth: 2, cat: 1 } },
-                { text: "Adventure camping trip", points: { lion: 2, dog: 1 } },
-                { text: "Cultural city exploration", points: { owl: 2, cat: 1 } },
-                { text: "Fun theme park", points: { dog: 2, lion: 1 } }
-            ]
-        },
-        {
-            text: "When faced with a problem, you:",
-            answers: [
-                { text: "Take time to think it through", points: { owl: 2, sloth: 1 } },
-                { text: "Ask friends for help", points: { dog: 2, cat: 1 } },
-                { text: "Face it head-on immediately", points: { lion: 2, dog: 1 } },
-                { text: "Hope it resolves itself", points: { sloth: 2, cat: 1 } }
-            ]
-        },
-        {
-            text: "Your favorite time of day is:",
-            answers: [
-                { text: "Early morning", points: { lion: 2, dog: 1 } },
-                { text: "Late night", points: { owl: 2, cat: 1 } },
-                { text: "Afternoon nap time", points: { sloth: 2, cat: 1 } },
-                { text: "Evening with friends", points: { dog: 2, lion: 1 } }
-            ]
-        },
-        {
-            text: "At a party, you're usually:",
-            answers: [
-                { text: "The center of attention", points: { lion: 2, dog: 1 } },
-                { text: "Having deep conversations", points: { owl: 2, cat: 1 } },
-                { text: "Making everyone laugh", points: { dog: 2, lion: 1 } },
-                { text: "Finding a quiet corner", points: { cat: 2, sloth: 1 } }
-            ]
-        }
-    ],
-    results: {
-        cat: {
-            title: "You're a Cat!",
-            description: "Independent, mysterious, and elegant. You value your alone time and have a selective circle of close friends. You're observant and prefer quality over quantity in all aspects of life."
-        },
-        dog: {
-            title: "You're a Dog!",
-            description: "Loyal, energetic, and social. You love being around people and are always ready for an adventure. Your enthusiasm is contagious and you're a great friend to have."
-        },
-        lion: {
-            title: "You're a Lion!",
-            description: "Brave, confident, and a natural leader. You're not afraid to take charge and face challenges head-on. Others look up to you for guidance and inspiration."
-        },
-        owl: {
-            title: "You're an Owl!",
-            description: "Wise, thoughtful, and introspective. You prefer to observe before acting and your insights are valued by those around you. You're the voice of reason in your group."
-        },
-        sloth: {
-            title: "You're a Sloth!",
-            description: "Relaxed, peaceful, and zen. You know the importance of taking things slow and enjoying life's simple pleasures. Your calm presence has a soothing effect on others."
-        }
-    }
-};
+let quizData = null;
 
 class QuizApp {
     constructor() {
         this.currentQuestion = 0;
         this.scores = {};
-        this.init();
+        this.loadQuizData();
+    }
+
+    async loadQuizData() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const quizName = urlParams.get('quiz') || 'quiz-data';
+            const response = await fetch(`${quizName}.json`);
+            quizData = await response.json();
+            this.init();
+        } catch (error) {
+            console.error('Error loading quiz data:', error);
+            document.body.innerHTML = '<div style="text-align: center; padding: 50px;"><h2>Error loading quiz data</h2></div>';
+        }
     }
 
     init() {
