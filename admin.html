@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Configurator</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Quiz Configurator</h1>
+            <div class="header-actions">
+                <button id="load-quiz-btn">Load Existing Quiz</button>
+                <button id="download-btn">Download JSON</button>
+            </div>
+        </header>
+
+        <main>
+            <section id="general-config" class="section">
+                <h2>General Configuration</h2>
+                <div class="form-group">
+                    <label for="quiz-title">Quiz Title</label>
+                    <input type="text" id="quiz-title" placeholder="What Animal Are You?" required>
+                </div>
+                <div class="form-group">
+                    <label for="quiz-description">Description</label>
+                    <textarea id="quiz-description" placeholder="Discover your spirit animal with this fun personality quiz!" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quiz-image">Cover Image URL (optional)</label>
+                    <input type="url" id="quiz-image" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="quiz-filename">JSON Filename</label>
+                    <input type="text" id="quiz-filename" placeholder="my-quiz" value="my-quiz" pattern="[a-zA-Z0-9_-]+" required>
+                    <small>Only letters, numbers, dashes and underscores allowed</small>
+                </div>
+            </section>
+
+            <section id="results-config" class="section">
+                <h2>Quiz Results</h2>
+                <div id="results-container"></div>
+                <button id="add-result-btn" class="add-btn">+ Add Result</button>
+            </section>
+
+            <section id="questions-config" class="section">
+                <h2>Questions</h2>
+                <div id="questions-container"></div>
+                <button id="add-question-btn" class="add-btn">+ Add Question</button>
+            </section>
+        </main>
+
+        <div id="preview-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>JSON Preview</h3>
+                    <button id="close-modal-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <pre id="json-preview"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button id="copy-json-btn">Copy to Clipboard</button>
+                    <button id="confirm-download-btn">Download File</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
